@@ -16,7 +16,7 @@ excuse to learn Twisted Python.
 
 I hope this code is helpful to others as a foundation for using twisted as the basis for active service discovery.
 
-[Find me on LinkedIn](www.linkedin.com/pub/jeff-hollar/0/6b7/813/)
+[Find me on LinkedIn](http://lnkd.in/WBgfEW)
 
 # System Overview
 
