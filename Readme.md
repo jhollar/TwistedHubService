@@ -1,7 +1,7 @@
 TwistedHubService
 =================
 
-The purpose of this module is to provide a simple identification and lookup mechanism for client applications wishing to obtain network access to a specific active services.
+The purpose of this project is to provide a simple identification and lookup mechanism for client applications wishing to obtain network access to a specific active services.
 
 # Overview
 
@@ -25,7 +25,7 @@ Pre-requisites
 * [Python:](http://www.python.org) Python 2.7.2 (default, Jun 20 2012, 16:23:33)
 * [Twisted](http://twistedmatrix.com/trac/wiki)
 
-This system is composed of the following:
+This project is composed of the following:
 
 TwistedHubServer
 ----------------
@@ -85,11 +85,65 @@ The following illustrates how the components interact and how I tested their log
 Starting TwistedHubService
 --------------------------
  * cd to TwistedHubService directory
- * python 
+ * python TwistedHubServer.py
+
+2013-02-06 10:32:28-0800 [-] Log opened.
+
+2013-02-06 10:32:28-0800 [-] TwistedHubService starting on 8888
+
+2013-02-06 10:32:28-0800 [-] Starting protocol <__main__.TwistedHubService instance at 0x108ce5878>
+
+2013-02-06 10:32:28-0800 [-] Started Listening - 224.0.0.1:8888
+
+-------------------------------
+Starting TwistedHubService
+--------------------------
+ * cd to ActiveServices directory
+ * python ActiveService01.py
+
+2013-02-06 10:35:26-0800 [-] Log opened.
+
+2013-02-06 10:35:26-0800 [-] ActiveServiceServerFactory starting on 8887
+
+2013-02-06 10:35:26-0800 [-] Starting factory <__main__.ActiveServiceServerFactory instance at 0x10984e290>
+
+2013-02-06 10:35:26-0800 [-] ActiveService01 UDP multicasting on 224.0.0.1:8888
+
+2013-02-06 10:35:26-0800 [-] TwistedHubServerService starting on 62443
+
+2013-02-06 10:35:26-0800 [-] Starting protocol <__main__.TwistedHubServerService instance at 0x10984e7a0>
+
+2013-02-06 10:35:26-0800 [TwistedHubServerService (UDP)] Received from TwistedHubServer: 192.168.1.71:8888
+
+Starting TwistedHubService
+--------------------------
+ * cd to TwistedClients directory
+ * python TwistedUDPCLient.py
+
+2013-02-06 10:38:10-0800 [-] Log opened.
+
+...
+
+2013-02-06 10:38:10-0800 [TwistedUDPClientService (UDP)] Attempting to connect to Active Service ActiveService01 - 192.168.1.71:8887
+
+...
+
+2013-02-06 10:38:10-0800 [ActiveServiceClientProtocol,client] received: "<service> Hello - Yes I'm here?"
+
+...
+
+When the client application sends a message to the activer service ActiveService01, the service will log the following:
+
+2013-02-06 10:38:10-0800 [ActiveServiceProtocol,0,192.168.1.71] Received: 'Hello Service are you there?'
+
+The active service contains a signal handler to capture a Ctl-C interrupt. If the active service handler is interrupted 
+the TwistedHubService will record a log message indicating the service has been removed from it's persisted directory:
+
+2013-02-06 10:42:34-0800 [TwistedHubService (UDP)] ActiveService removed from hub (ActiveService01) 192.168.1.71:8887
+
 # License
+[Apache License:](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-Apache License: http://www.apache.org/licenses/LICENSE-2.0.html
-
-# Future Enhancements
-This is a very basis system which could be extended to provide more robust production quality features. Here are a few items I can think of
-which might be nice to have:
+# Final Note
+This is a very basic system which could be used as the foundation for more complex solutions. I provided this as part of
+my learnings. 
